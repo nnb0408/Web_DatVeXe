@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/Account.cshtml";
+}
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center mb-2">
+                <h2 class="heading-section">Sign Up</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="login-wrap p-0">
+                    @if (ViewBag.TB == "Đăng ký thành công!")
+                    {
+                        <h3 class="mb-4 text-center text-success font-weight-bold">@ViewBag.TB</h3>
+                    }
+                    else
+                    {
+                        <h3 class="mb-4 text-center text-danger font-weight-bold">@ViewBag.TB</h3>
+                    }
+                    <h3 class="mb-4 text-center">Do not have an account?</h3>
+                    @using (Html.BeginForm())
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Full Name" name="fullname" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Username" name="username" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="date" class="form-control" name="date" value="2002-08-04" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select class="form-control" id="genderSelect" name="gender" required>
+                                        <option selected>Nam</option>
+                                        <option>Nữ</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Re-Password" name="repassword" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Address" name="address" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email Address" name="email" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="tel" class="form-control" placeholder="Phone Number" name="phone" pattern="[0-9]+" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                        </div>
+                        <p class="w-100 text-center">&mdash; Have an account? &mdash;</p>
+                        <div class="form-group">
+                            <button type="button" class="form-control btn btn-primary submit px-3" onclick="location.href='@Url.Action("DangNhap", "NguoiDung")'">Sign In</button>
+                        </div>
+                        <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
+                        <div class="social d-flex text-center">
+                            <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
+                            <a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

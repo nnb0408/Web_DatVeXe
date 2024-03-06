@@ -1,0 +1,193 @@
+﻿@model IEnumerable<QL_DatVeXe.Models.VEXE>
+
+@{
+    ViewBag.Title = "TimVe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1 temp_col"></div>
+        <div class="spro col-lg-11">
+
+            <!-- Offers Sorting -->
+            <div class="offers_sorting_container">
+                <div class="thongbao">@Session["TB"]</div>
+                <ul class="title-offers">
+                    <li>Sắp xếp theo giá</li>
+                    <li>Sắp xếp theo tên</li>
+                    <li class="title-offers-2">đánh giá</li>
+                    <li class="title-offers-2">Số ghế trống</li>
+                    <li class="title-offers-2">Lượt reviews</li>
+                </ul>
+                <ul class="offers_sorting">
+                    <li>
+                        <span class="sorting_text">Tất cả</span>
+                        <i class="fa fa-chevron-down"></i>
+                        <ul>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }' data-parent=".price_sorting"><span>Tất cả</span></li>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "price" }' data-parent=".price_sorting"><span>Tăng dần</span></li>
+                        </ul>
+                    </li>
+                    <li class="distance_item">
+                        <span class="sorting_text">Mặc định</span>
+                        <i class="fa fa-chevron-down"></i>
+                        <ul>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Mặc định</span></li>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "name" }'><span>Theo bảng chữ cái</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="sorting_text">Tất cả</span>
+                        <i class="fa fa-chevron-down"></i>
+                        <ul>
+                            <li class="filter_btn" data-filter="*"><span>Tất cả</span></li>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "stars" }'><span>Tăng dần</span></li>
+                            <li class="filter_btn" data-filter=".rating_1"><span>1 sao</span></li>
+                            <li class="filter_btn" data-filter=".rating_2"><span>2 sao</span></li>
+                            <li class="filter_btn" data-filter=".rating_3"><span>3 sao</span></li>
+                            <li class="filter_btn" data-filter=".rating_4"><span>4 sao</span></li>
+                            <li class="filter_btn" data-filter=".rating_5"><span>5 sao</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="sorting_text">Tất cả</span>
+                        <i class="fa fa-chevron-down"></i>
+                        <ul>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }' data-parent=".ghe_sorting"><span>Tất cả</span></li>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "ghe" }' data-parent=".ghe_sorting"><span>Tăng dần</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="sorting_text">Tất cả</span>
+                        <i class="fa fa-chevron-down"></i>
+                        <ul>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }' data-parent=".review_sorting"><span>Tất cả</span></li>
+                            <li class="sort_btn" data-isotope-option='{ "sortBy": "review" }' data-parent=".review_sorting"><span>Tăng dần</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <!-- Offers Grid -->
+            <div class="offers_grid">
+                <!-- Offers Item -->
+                @foreach (var item in Model)
+                {
+                    <div class="offers_item rating_@item.SOSAO">
+                        <div class="row">
+                            <div class="col-lg-1 temp_col"></div>
+                            <div class="col-lg-3 col-1680-4">
+                                <div class="offers_image_container">
+                                    <a href="@Url.Action("XemChiTietVeXe", "VeXe", new { mave = item.MAVE, diemden = item.DIEMDEN })">
+                                        <img class="offers_image_background" src="~/Content/images/@item.HINHANH">
+                                    </a>
+                                    <div class="offer_khoihanh"><a href="single_listing.html">@item.DIEMDON - @item.DIEMDEN</a></div>
+                                    <div class="offer_name"><a href="single_listing.html">@item.TENVE</a></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="offers_content">
+                                    <div class="offers_price ml-2">@string.Format("{0:N0}", item.GIAVE)&ETH;<span class="khoihanh">Khởi hành lúc @item.THOIGIANDON</span></div><br /><span class="sos">@item.NGAYDI.ToString("dd/MM/yyyy") - @item.NGAYVE.ToString("dd/MM/yyyy")</span>
+                                    <div class="rating_r rating_r_@item.SOSAO offers_rating" data-rating="@item.SOSAO">
+                                        <i></i>
+                                        <i></i>
+                                        <i></i>
+                                        <i></i>
+                                        <i></i>
+                                    </div>
+                                    <p class="offers_text">@item.MOTA</p>
+                                    <div class="offers_icons">
+                                        <ul class="offers_icons_list">
+                                            <li class="offers_icons_item"><img src="~/Content/images/post.png" alt=""></li>
+                                            <li class="offers_icons_item"><img src="~/Content/images/compass.png" alt=""></li>
+                                            <li class="offers_icons_item"><img src="~/Content/images/bicycle.png" alt=""></li>
+                                            <li class="offers_icons_item"><img src="~/Content/images/sailboat.png" alt=""></li>
+                                        </ul>
+                                    </div>
+                                    <div class="button book_button"><a href="@Url.Action("DatVe", "VeXe", new { mave = item.MAVE })">book<span></span><span></span><span></span></a></div>
+                                    <div class="thatim">
+                                        <a href="@Url.Action("ThemVeXeYeuThich", "YeuThich", new { mave = item.MAVE })">
+                                            @if (item.YEUTHICH == false)
+                                            {
+                                                <i class="fa fa-heart-o" style="color:#fe0083"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-heart" style="color:#fe0083"></i>
+                                            }
+                                        </a>
+                                    </div>
+                                    <div class="offer_reviews">
+                                        <div class="offer_reviews_content">
+                                            @if ((item.SOSAO * 2) >= 8 && (item.SOSAO * 2) <= 10)
+                                            {
+                                                <div class="offer_reviews_title">đánh giá cao</div>
+                                            }
+                                            else if ((item.SOSAO * 2) >= 5)
+                                            {
+                                                <div class="offer_reviews_title">tạm ổn</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="offer_reviews_title">đánh giá kém</div>
+                                            }
+
+                                            <div class="offer_reviews_subtitle" data-review="@item.LUOTDANHGIA">@item.LUOTDANHGIA reviews</div>
+                                            @if (item.CONTRONG == 0)
+                                            {
+                                                <div class="offer_ghe_subtitle" style="color:red; font-weight:bold; font-size:30px; position:relative; top:40px; right:200px;" data-ghe="@item.CONTRONG">HẾT GHẾ</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="offer_ghe_subtitle" data-ghe="@item.CONTRONG">Còn @item.CONTRONG chỗ trống</div>
+
+                                            }
+                                        </div>
+                                        <div class="offer_reviews_rating text-center">@(item.SOSAO * 2)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="pagination-area">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <ul class="pagination-box">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <li>
+                                <a href="@Url.Action("ShowAllVeXe", new { page = ViewBag.CurrentPage - 1 })"><i class="fa fa-chevron-left"></i> Previous</a>
+                            </li>
+                        }
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            if (i == ViewBag.CurrentPage)
+                            {
+                                <li class="active"><a href="#">@i</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("ShowAllVeXe", new { page = i })">@i</a></li>
+                            }
+                        }
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <li>
+                                <a href="@Url.Action("ShowAllVeXe", new { page = ViewBag.CurrentPage + 1 })"> Next <i class="fa fa-chevron-right"></i></a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>

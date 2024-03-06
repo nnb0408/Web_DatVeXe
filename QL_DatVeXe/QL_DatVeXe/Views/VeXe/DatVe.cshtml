@@ -1,0 +1,181 @@
+﻿@model QL_DatVeXe.Models.User_DatHang
+
+@{
+    ViewBag.Title = "DatVe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="checkout-area pt-60 pb-30" style="background-color:white;">
+    <div class="container">
+        <div class="row" style="position:relative; top:20px;">
+            <div class="col-12">
+                <div class="coupon-accordion">
+                    <!--Accordion Start-->
+                    <h3>Có phiếu giảm giá? <span id="showcoupon">Nhấn vào đây để nhập phiếu giảm giá</span></h3>
+                    <div id="checkout_coupon" class="coupon-checkout-content">
+                        <div class="coupon-info">
+                            <form action="#">
+                                <p class="checkout-coupon">
+                                    <input placeholder="Phiếu giảm giá" type="text">
+                                    <input value="Xác nhận" type="submit">
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                    <!--Accordion End-->
+                </div>
+            </div>
+        </div>
+        <form action="/VeXe/XacNhanDatVe">
+            <div class="row mt-5">
+                <div class="col-lg-6">
+                    <div class="checkbox-form">
+                        <h3 style="color: black; font-weight:bold; font-size:30px">Chi tiết thanh toán</h3>
+                        <div class="row">
+                            <input type="hidden" name="mave" value="@Model.VeXe.MAVE" />
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>Họ Tên <span class="required">*</span></label>
+                                    <input name="ten" placeholder="VD: Nguyễn Nguyên Bảo" type="text" value="@Model.KhachHang.TENKH" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>Địa Chỉ</label>
+                                    <input name="diachi" placeholder="Số nhà, Đường phố, Quận Huyện, Thành phố,.." type="text" value="@Model.KhachHang.DIACHI" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>Số Điện Thoại<span class="required">*</span></label>
+                                    <input name="sdt" placeholder="VD: 0123456789" type="tel" pattern="[0-9]+" minlength="10" maxlength="10" value="@Model.KhachHang.SDT" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>Số Ghế <span class="required">*</span></label>
+                                    <input id="so-ghe-input" name="ghe" placeholder="VD: 1" type="number" value="1" pattern="[0-9]+" min="1" max="@Model.VeXe.CONTRONG" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>Địa Chỉ Email</label>
+                                    <input name="email" placeholder="VD: me@gmail.com" type="email" value="@Model.KhachHang.EMAIL">
+                                </div>
+                            </div>
+                            <div class="order-notes col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>Ghi Chú</label>
+                                    <textarea id="checkout-mess" name="ghichu" cols="30" rows="10" placeholder="Ghi chú về đơn hàng của bạn, ví dụ như ghi chú đặc biệt khi đặt vé."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="your-order" style="color:black">
+                        <h3 style="color: black; font-weight:bold; font-size:30px">Đơn Đặt Hàng Của Bạn</h3>
+                        <div class="your-order-table table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="cart-product-name">Vé Xe</th>
+                                        <th class="cart-product-total">Thành Tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="cart_item">
+                                        <td class="cart-product-name">@Model.VeXe.TENVE<strong class="product-quantity"> <br /> @Model.VeXe.DIEMDON - @Model.VeXe.DIEMDEN</strong></td>
+                                        <td class="cart-product-total"><span class="amount" style="position:relative; top:10px">@string.Format("{0:N0}", @Model.VeXe.GIAVE) &ETH;</span></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="cart-subtotal">
+                                        <th>Tổng Cộng</th>
+                                        <td><span id="tong-tien" class="amount">@string.Format("{0:N0}", Model.VeXe.GIAVE) &ETH;</span></td>
+                                    </tr>
+                                    <tr class="cart-subtotal">
+                                        <th>Giảm Giá</th>
+                                        <td><span class="amount">@string.Format("{0:N0}", Session["giamgia"]) &ETH;</span></td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th>Tiền Phải Trả</th>
+                                        <td><strong><span id="tien-phai-tra" class="amount">@string.Format("{0:N0}", Session["tongcong"]) &ETH;</span></strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="payment-method">
+                            <div class="payment-accordion">
+                                <div id="accordion">
+                                    <div class="card">
+                                        <div class="card-header" id="#payment-1">
+                                            <h5 class="panel-title">
+                                                <a class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Chuyển Khoản Trực Tiếp
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p>Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. Đơn đặt hàng của bạn sẽ không được giao cho đến khi tiền đã được thanh toán trong tài khoản của chúng tôi.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="#payment-2">
+                                            <h5 class="panel-title">
+                                                <a class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Thanh Toán Séc
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p>Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. Đơn đặt hàng của bạn sẽ không được giao cho đến khi tiền đã được thanh toán trong tài khoản của chúng tôi.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="#payment-3">
+                                            <h5 class="panel-title">
+                                                <a class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    PayPal
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p>Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. Đơn đặt hàng của bạn sẽ không được giao cho đến khi tiền đã được thanh toán trong tài khoản của chúng tôi.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-button-payment">
+                                    <input value="Đặt Vé" type="submit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    const soGheInput = document.getElementById('so-ghe-input');
+    const tongTienElement = document.getElementById('tong-tien');
+    const tienPhaiTraElement = document.getElementById('tien-phai-tra');
+
+    soGheInput.addEventListener('change', function () {
+
+        const soGhe = parseInt(soGheInput.value);
+        const giaVe = @Model.VeXe.GIAVE;
+        const giamGia = @Session["giamgia"];
+
+        const tongTien = soGhe * giaVe;
+        const tienPhaiTra = tongTien - giamGia;
+        tongTienElement.textContent = tongTien.toLocaleString() + ' Đ';
+        tienPhaiTraElement.textContent = tienPhaiTra.toLocaleString() + ' Đ';
+    });
+</script>

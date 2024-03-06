@@ -1,0 +1,52 @@
+﻿@model IEnumerable<QL_DatVeXe.Models.VEXEYEUTHICH>
+
+@{
+    ViewBag.Title = "VeXeYeuThich";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wishlist-area pt-60 pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="#">
+                    <div class="table-content table-responsive mt-5">
+                        <table class="table">
+                            <thead>
+                                <tr style="background-color:rgba(245, 199, 134, 0.53)">
+                                    <th class="li-product-remove" style="color:black; font-size:16px; font-weight:bold">Xóa</th>
+                                    <th class="li-product-thumbnail" style="color:black; font-size:16px; font-weight:bold">Hình Ảnh</th>
+                                    <th class="cart-product-name" style="color:black; font-size:16px; font-weight:bold">Địa Điểm</th>
+                                    <th class="li-product-price" style="color:black; font-size:16px; font-weight:bold">Giá Vé</th>
+                                    <th class="li-product-stock-status" style="color:black; font-size:16px; font-weight:bold">Ghế Trống</th>
+                                    <th class="li-product-add-cart" style="color:black; font-size:16px; font-weight:bold">add to cart</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="li-product-remove"><a href="@Url.Action("XoaVeXeYeuThich", "YeuThich", new {mave = item.MAVE})"><i class="fa fa-times"></i></a></td>
+                                        <td class="li-product-thumbnail"><a href="@Url.Action("XemChiTietVeXe", "VeXe", new {mave = item.MAVE, diemden = item.VEXE.DIEMDEN})"><img src="~/Content/images/@item.VEXE.HINHANH" alt="" width="150" height="150"></a></td>
+                                        <td class="li-product-name"><a style="color:black" href="@Url.Action("XemChiTietVeXe", "VeXe", new {mave = item.MAVE, diemden = item.VEXE.DIEMDEN})">@item.VEXE.DIEMDON - @item.VEXE.DIEMDEN</a></td>
+                                        <td class="li-product-price" style="color:black"><span class="amount">@string.Format("{0:N0}", item.VEXE.GIAVE)&ETH;</span></td>
+                                        @if (item.VEXE.CONTRONG > 0)
+                                        {
+                                            <td class="li-product-stock-status"><span class="in-stock">@item.VEXE.CONTRONG</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td class="li-product-stock-status"><span class="out-stock">@item.VEXE.CONTRONG</span></td>
+
+                                        }
+                                        <td class="li-product-add-cart"><a href="@Url.Action("DatVe", "VeXe", new { mave = item.VEXE.MAVE })">Đặt Vé</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

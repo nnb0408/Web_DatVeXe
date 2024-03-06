@@ -1,0 +1,58 @@
+﻿@model QL_DatVeXe.Models.ChoXacNhan
+
+@{
+    ViewBag.Title = "HoaDonDaXacNhan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    int? thanhtien = 0;
+}
+
+@foreach (var item in Model.lstHoaDon)
+{
+    thanhtien = 0;
+    <div class="hds-2">
+        <div class="hd_diemden_cungloai">Đã xác nhận</div>
+        @foreach (var cthd in Model.LstCTHD)
+        {
+            if (cthd.MAHD == item.MAHD)
+            {
+                <p class="hd_hrclass"></p>
+                <div class="hd">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="hd_image">
+                                <a href="@Url.Action("XemChiTietVeXe", "VeXe", new { mave = cthd.MAVE, diemden = cthd.VEXE.DIEMDEN })">
+                                    <img src="~/Content/images/@cthd.VEXE.HINHANH" alt="">
+                                </a>
+                            </div>
+                            <div class="hd_star rating_r rating_r_@cthd.VEXE.SOSAO offers_rating"><a href="#"><i></i><i></i><i></i><i></i><i></i> </a></div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="hd_content">
+                                <div class="hd_title ml-50">@cthd.VEXE.TENVE</div>
+                                <div class="hd_diadiem">@cthd.VEXE.DIEMDON - @cthd.VEXE.DIEMDEN</div>
+                                <div class="hd_thoigian">
+                                    <div class="hd_khoihanh">Khởi hành lúc: @cthd.VEXE.THOIGIANDON</div>
+                                    <div class="hd_ngaybd">@cthd.VEXE.NGAYDI.ToString("dd/MM/yyyy") - @cthd.VEXE.NGAYVE.ToString("dd/MM/yyyy")</div>
+                                </div>
+                                <div class="hd_extra ml-50" style="color:black">Số ghế: @cthd.SOGHE</div>
+                                <div class="hd_giaban ml-50">Giá vé 1 ghế: @string.Format("{0:N0}", cthd.VEXE.GIAVE) Đ</div>
+                                <div class="hd_extra ml-50">@cthd.VEXE.MOTA</div>
+                                <input type="hidden" value="@(thanhtien += cthd.HOADON.THANHTIEN)" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+        <div class="hd_tongtien">Số tiền phải trả: @string.Format("{0:N0}", thanhtien) Đ</div>
+    </div>
+}
+
+
+
+
